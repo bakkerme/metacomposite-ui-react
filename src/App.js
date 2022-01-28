@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Sidebar from "./sidebar";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Post from './postCard'
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+      }}
+    >
+      <Sidebar />
+      <Grid container spacing={2} p={4}>
+        <Grid item xs={6}>
+          <Stack spacing={2}>
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+          </Stack>
+        </Grid>
+        <Grid item xs={6}>
+          Content
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 

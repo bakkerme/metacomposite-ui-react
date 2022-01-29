@@ -1,76 +1,88 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import Box from "@mui/material/Box";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
+import { timestampToString } from "./lib/functions";
 
-export const Post = React.memo(function BlogCard() {
+export const Post = ({ post, onClick, ...other }) => {
+  const { title, timestamp, imageURLs, description } = post;
+
+  const dateString = timestampToString(timestamp);
+  const truncatedDescription =
+    description.length > 0 ? description.split(".")[0] + "." : null;
+
+  const handleClick = () => {
+    onClick(post);
+  };
+
   return (
-    <Card
-      sx={{
-        borderRadius: "16px",
-        padding: "4px 4px",
-        boxShadow: "1px 5px 20px 0px rgb(34 35 58 / 20%)",
-        maxWidth: 500,
-        overflow: "initial",
-        background: "#ffffff",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-      }}
-    >
-      <CardMedia
-        image={"https://placekitten.com/640/360"}
+      <Card
         sx={{
-          width: "100%",
-          marginLeft: "-24px",
-          marginTop: 0,
-          maxWidth: 150,
-          maxHeight: 150,
-          paddingBottom: "24%",
-          borderRadius: '8px',
-          backgroundColor: "#fff",
+          borderRadius: "16px",
+          // maxWidth: 500,
+          overflow: "initial",
+          background: "#ffffff",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          cursor: "pointer",
         }}
-      />
-      <CardContent>
-        <span
-          style={{
-            display: "inline-block",
-            fontSize: 12,
-            marginBottom: "0.875em",
-            letterSpacing: 1,
-            textTransform: "uppercase",
-          }}
-        >
-          28 Mar 2019
-        </span>
-        <h4
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            margin: 0,
-            marginBottom: 7,
-            letterSpacing: 0.1876,
-          }}
-        >
-          What is Git?
-        </h4>
-        <p
-          style={{
-            fontSize: 13,
-            letterSpacing: "0.00938em",
-            marginBottom: 0,
-            marginTop: 0,
-            color: "rgba(0, 0, 0, 0.7)",
-          }}
-        >
-          Git is a distributed version control system. Every dev has a working
-          copy of the code and...
-        </p>
-      </CardContent>
-    </Card>
+        onClick={handleClick}
+        {...other}
+      >
+        {imageURLs.length > 0 && (
+          <CardMedia
+            image={imageURLs[0]}
+            sx={{
+              width: "100%",
+              marginLeft: "-24px",
+              marginTop: 0,
+              maxWidth: 100,
+              maxHeight: 100,
+              paddingBottom: "24%",
+              borderRadius: "8px",
+              backgroundColor: "#fff",
+            }}
+          />
+        )}
+        <CardContent>
+          <span
+            style={{
+              display: "inline-block",
+              fontSize: 12,
+              marginBottom: "0.875em",
+              letterSpacing: 1,
+              textTransform: "uppercase",
+            }}
+          >
+            {dateString}
+          </span>
+          <h4
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              margin: 0,
+              letterSpacing: 0.1876,
+            }}
+          >
+            {title}
+          </h4>
+          {truncatedDescription && (
+            <p
+              style={{
+                fontSize: 13,
+                letterSpacing: "0.00938em",
+                marginBottom: 0,
+                marginTop: 7,
+                color: "rgba(0, 0, 0, 0.7)",
+              }}
+            >
+              {truncatedDescription}
+            </p>
+          )}
+        </CardContent>
+      </Card>
   );
-});
+};
 
 export default Post;
